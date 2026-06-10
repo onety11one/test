@@ -29,8 +29,12 @@ namespace Installers
                 .AsSingle();
             
             // Presenter
-            Container.BindInterfacesAndSelfTo<ClickerPresenter>()
+            Container.Bind<ClickerPresenter>()
                 .AsSingle()
+                .OnInstantiated<ClickerPresenter>((ctx, presenter) =>
+                {
+                    presenter.Initialize();
+                })
                 .NonLazy();
         }
     }

@@ -3,6 +3,7 @@ using DG.Tweening;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Modules.Clicker.View
 {
@@ -10,8 +11,8 @@ namespace Modules.Clicker.View
     {
         [Header("UI Elements")]
         [SerializeField] private Button _clickButton;
-        [SerializeField] private Text _currencyText;
-        [SerializeField] private Text _energyText;
+        [SerializeField] private TMP_Text _currencyText;
+        [SerializeField] private TMP_Text _energyText;
         
         [Header("Animation")]
         [SerializeField] private float _pressScale = 0.9f;
