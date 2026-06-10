@@ -1,4 +1,5 @@
 using System;
+using Core.Navigation;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -7,12 +8,15 @@ using TMPro;
 
 namespace Modules.Clicker.View
 {
-    public class ClickerView : MonoBehaviour, IClickerView
+    public class ClickerView : MonoBehaviour, IClickerView, ITabView
     {
         [Header("UI Elements")]
         [SerializeField] private Button _clickButton;
         [SerializeField] private TMP_Text _currencyText;
         [SerializeField] private TMP_Text _energyText;
+        
+        [Header("Tab Settings")]
+        [SerializeField] private GameObject _contentPanel;
         
         [Header("Animation")]
         [SerializeField] private float _pressScale = 0.9f;
@@ -31,8 +35,30 @@ namespace Modules.Clicker.View
         public Transform CoinTarget => _coinTarget;
         public Transform ParticleSpawnPoint => _particleSpawnPoint;
         
+        public GameObject GameObject => gameObject;
+        
         public void SetCurrencyText(string text) => _currencyText.text = text;
         public void SetEnergyText(string text) => _energyText.text = text;
+        
+        public void Show()
+        {
+            if (_contentPanel != null)
+                _contentPanel.SetActive(true);
+            else
+                gameObject.SetActive(true);
+            
+            Debug.Log("Clicker tab shown");
+        }
+        
+        public void Hide()
+        {
+            if (_contentPanel != null)
+                _contentPanel.SetActive(false);
+            else
+                gameObject.SetActive(false);
+            
+            Debug.Log("Clicker tab hidden");
+        }
         
         public void PlayClickAnimation()
         {
