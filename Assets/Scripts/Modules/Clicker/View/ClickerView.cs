@@ -46,8 +46,6 @@ namespace Modules.Clicker.View
                 _contentPanel.SetActive(true);
             else
                 gameObject.SetActive(true);
-            
-            Debug.Log("Clicker tab shown");
         }
         
         public void Hide()
@@ -56,8 +54,6 @@ namespace Modules.Clicker.View
                 _contentPanel.SetActive(false);
             else
                 gameObject.SetActive(false);
-            
-            Debug.Log("Clicker tab hidden");
         }
         
         public void PlayClickAnimation()

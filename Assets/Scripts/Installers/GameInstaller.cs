@@ -1,12 +1,16 @@
 using UnityEngine;
 using Zenject;
 using Core.Navigation;
+using Core.Network;
 using Modules.Clicker.Model;
 using Modules.Clicker.View;
 using Modules.Clicker.Presenter;
 using Modules.Clicker.VFX;
 using Modules.Weather.View;
 using Modules.Dogs.View;
+using Modules.Weather;
+using Modules.Weather.Model;
+using Modules.Weather.Presenter;
 
 namespace Installers
 {
@@ -87,6 +91,29 @@ namespace Installers
             Container.Bind<ClickerVFXManager>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container.Bind<IWeatherView>()
+                .FromInstance(_weatherView)
+                .AsSingle();
+            
+            Container.Bind<WeatherModel>()
+                    .AsSingle()
+                    .NonLazy();
+                
+            Container.Bind<WeatherPresenter>()
+                    .AsSingle()
+                    .OnInstantiated<WeatherPresenter>((ctx, presenter) =>
+                    {
+                        presenter.Initialize();
+                    })
+                    .NonLazy();
+            
+            Container.Bind<WeatherService>()
+                .AsSingle();
+            
+            Container.Bind<NetworkRequestQueue>()
+                    .AsSingle()
+                    .NonLazy();
         }
         
         private void BindAsTabView<T>(T view) where T : MonoBehaviour, ITabView
