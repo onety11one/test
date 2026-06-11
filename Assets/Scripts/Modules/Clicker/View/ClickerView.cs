@@ -75,16 +75,6 @@ namespace Modules.Clicker.View
                 });
         }
         
-        public void PlayParticleEffect()
-        {
-            Debug.Log("Particle effect played");
-        }
-        
-        public void PlayCoinFlyAnimation(Vector3 from, Vector3 to)
-        {
-            Debug.Log($"Coin flying from {from} to {to}");
-        }
-        
         public void PlayClickSound()
         {
             if (_audioSource != null && _clickSound != null)

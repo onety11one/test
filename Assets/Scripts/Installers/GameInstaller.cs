@@ -4,6 +4,7 @@ using Core.Navigation;
 using Modules.Clicker.Model;
 using Modules.Clicker.View;
 using Modules.Clicker.Presenter;
+using Modules.Clicker.VFX;
 using Modules.Weather.View;
 using Modules.Dogs.View;
 
@@ -21,6 +22,11 @@ namespace Installers
         
         [Header("Navigation")]
         [SerializeField] private TabButton[] _tabButtons;
+        
+        [Header("VFX Prefabs")]
+        [SerializeField] private ParticleSystem _clickParticlesPrefab;
+        [SerializeField] private RectTransform _flyingCoinPrefab;
+        [SerializeField] private Transform _vfxParent;
         
         public override void InstallBindings()
         {
@@ -61,6 +67,25 @@ namespace Installers
                     
                     controller.SwitchTab(0);
                 })
+                .NonLazy();
+            
+            var vfxContainer = new GameObject("VFXPoolContainer");
+            vfxContainer.transform.SetParent(_vfxParent);
+            
+            Container.BindMemoryPool<ParticleSystem, ClickParticlesPool>()
+                .WithInitialSize(5)
+                .FromComponentInNewPrefab(_clickParticlesPrefab)
+                .UnderTransform(vfxContainer.transform)
+                .AsCached();
+
+            Container.BindMemoryPool<RectTransform, FlyingCoinPoolImpl>()
+                .WithInitialSize(5)
+                .FromComponentInNewPrefab(_flyingCoinPrefab)
+                .UnderTransform(vfxContainer.transform)
+                .AsCached();
+            
+            Container.Bind<ClickerVFXManager>()
+                .AsSingle()
                 .NonLazy();
         }
         

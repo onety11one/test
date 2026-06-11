@@ -14,8 +14,6 @@ namespace Modules.Clicker.View
         void SetCurrencyText(string text);
         void SetEnergyText(string text);
         void PlayClickAnimation();
-        void PlayParticleEffect();
-        void PlayCoinFlyAnimation(Vector3 from, Vector3 to);
         void PlayClickSound();
         void ShowEnergyDepletedEffect();
     }

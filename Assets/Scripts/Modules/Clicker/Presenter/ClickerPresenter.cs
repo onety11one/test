@@ -1,7 +1,7 @@
 using System;
-using Cysharp.Threading.Tasks;
 using UniRx;
 using Modules.Clicker.Model;
+using Modules.Clicker.VFX;
 using Modules.Clicker.View;
 
 namespace Modules.Clicker.Presenter
@@ -11,15 +11,17 @@ namespace Modules.Clicker.Presenter
         private readonly ClickerModel _model;
         private readonly IClickerView _view;
         private readonly ClickerConfig _config;
+        private readonly ClickerVFXManager _vfxManager;
         
         private readonly CompositeDisposable _disposables = new();
         private IDisposable _autoCollectSubscription;
         
-        public ClickerPresenter(ClickerModel model, IClickerView view, ClickerConfig config)
+        public ClickerPresenter(ClickerModel model, IClickerView view, ClickerConfig config, ClickerVFXManager vfxManager)
         {
             _model = model;
             _view = view;
             _config = config;
+            _vfxManager = vfxManager;
         }
         
         public void Initialize()
@@ -88,12 +90,16 @@ namespace Modules.Clicker.Presenter
         {
             _view.PlayClickAnimation();
             _view.PlayClickSound();
-            _view.PlayParticleEffect();
-            
+    
+            if (_view.ParticleSpawnPoint != null)
+            {
+                _vfxManager.PlayParticles(_view.ParticleSpawnPoint.position);
+            }
+    
             if (_view.ParticleSpawnPoint != null && _view.CoinTarget != null)
             {
-                _view.PlayCoinFlyAnimation(
-                    _view.ParticleSpawnPoint.position, 
+                _vfxManager.PlayCoinFly(
+                    _view.ParticleSpawnPoint.position,
                     _view.CoinTarget.position
                 );
             }
