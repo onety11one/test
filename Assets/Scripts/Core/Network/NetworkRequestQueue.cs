@@ -32,7 +32,7 @@ namespace Core.Network
             };
     
             _requestQueue.Enqueue(request);
-            Debug.Log($"Weather: queue request added, queue size: {_requestQueue.Count}");
+            Debug.Log($"Network: queue request added, queue size: {_requestQueue.Count}");
     
             if (!_isProcessing)
             {
@@ -50,7 +50,7 @@ namespace Core.Network
             
             if (_currentRequest == request && request.CurrentRequest != null)
             {
-                Debug.Log("Weather: aborting active request");
+                Debug.Log("Network: aborting active request");
                 request.CurrentRequest.Abort();
             }
         }

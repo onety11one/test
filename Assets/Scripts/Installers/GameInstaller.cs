@@ -6,11 +6,14 @@ using Modules.Clicker.Model;
 using Modules.Clicker.View;
 using Modules.Clicker.Presenter;
 using Modules.Clicker.VFX;
+using Modules.Dogs.Model;
+using Modules.Dogs.Presenter;
+using Modules.Dogs.Services;
 using Modules.Weather.View;
 using Modules.Dogs.View;
-using Modules.Weather;
 using Modules.Weather.Model;
 using Modules.Weather.Presenter;
+using Modules.Weather.Services;
 
 namespace Installers
 {
@@ -114,6 +117,25 @@ namespace Installers
             Container.Bind<NetworkRequestQueue>()
                     .AsSingle()
                     .NonLazy();
+            
+            Container.Bind<DogsModel>()
+                .AsSingle()
+                .NonLazy();
+    
+            Container.Bind<DogsService>()
+                .AsSingle();
+    
+            Container.Bind<IDogsView>()
+                .FromInstance(_dogsView)
+                .AsSingle();
+    
+            Container.Bind<DogsPresenter>()
+                .AsSingle()
+                .OnInstantiated<DogsPresenter>((ctx, presenter) =>
+                {
+                    presenter.Initialize();
+                })
+                .NonLazy();
         }
         
         private void BindAsTabView<T>(T view) where T : MonoBehaviour, ITabView
