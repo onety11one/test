@@ -27,13 +27,20 @@ namespace Modules.Weather.Services
                 return new WeatherData
                 {
                     Temperature = $"{period.temperature}F",
+                    IconUrl = period.icon
                 };
             }
             catch (Exception e)
             {
-                Debug.Log($"Failed to parse weather: {e.Message}");
+                Debug.LogError($"Failed to parse weather: {e.Message}");
                 return null;
             }
+        }
+        
+        public UnityWebRequest CreateIconRequest(string iconUrl)
+        {
+            var request = UnityWebRequestTexture.GetTexture(iconUrl);
+            return request;
         }
     }
     
@@ -53,6 +60,6 @@ namespace Modules.Weather.Services
     public class Period
     {
         public int temperature;
-        public string shortForecast;
+        public string icon;
     }
 }

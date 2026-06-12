@@ -7,6 +7,7 @@ namespace Modules.Weather.Model
     public class WeatherData
     {
         public string Temperature;
+        public string IconUrl;
     }
     
     public class WeatherModel : IDisposable

@@ -2652,7 +2652,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ef1833932809e4149b9ef31d3fb01ec2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e33a9f5477d7f204cb2a224ff3412d40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4720,6 +4720,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _contentPanel: {fileID: 816990984}
   _weatherText: {fileID: 574962743}
+  _weatherIcon: {fileID: 1027432446}
 --- !u!1 &2076385122
 GameObject:
   m_ObjectHideFlags: 0
@@ -4989,7 +4990,7 @@ MonoBehaviour:
   _particleSpawnPoint: {fileID: 1870874579}
   _coinTarget: {fileID: 1913202994}
   _audioSource: {fileID: 1532597787}
-  _clickSound: {fileID: 8300000, guid: 34c638d8d99ccfd44a261f13505ab317, type: 3}
+  _clickSound: {fileID: 8300000, guid: 3c950f2d266204c45af993b68cbe645d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

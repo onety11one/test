@@ -3,6 +3,7 @@ using UniRx;
 using UnityEngine;
 using Core.Navigation;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Modules.Weather.View
 {
@@ -10,6 +11,7 @@ namespace Modules.Weather.View
     {
         [SerializeField] private GameObject _contentPanel;
         [SerializeField] private TMP_Text _weatherText;
+        [SerializeField] private Image _weatherIcon; 
         
         public GameObject GameObject => gameObject;
         
@@ -44,6 +46,14 @@ namespace Modules.Weather.View
             if (_weatherText != null)
             {
                 _weatherText.text = $"Today - {temperature}";
+            }
+        }
+        
+        public void SetWeatherIcon(Sprite icon)
+        {
+            if (_weatherIcon != null && icon != null)
+            {
+                _weatherIcon.sprite = icon;
             }
         }
     }
