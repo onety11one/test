@@ -73,7 +73,7 @@ namespace Modules.Clicker.View
         
         public void PlayClickSound()
         {
-            if (_audioSource != null && _clickSound != null)
+            if (_audioSource != null && _clickSound != null && _audioSource.isActiveAndEnabled)
             {
                 _audioSource.PlayOneShot(_clickSound);
             }
