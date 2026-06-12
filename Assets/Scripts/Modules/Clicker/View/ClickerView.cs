@@ -35,8 +35,6 @@ namespace Modules.Clicker.View
         public Transform CoinTarget => _coinTarget;
         public Transform ParticleSpawnPoint => _particleSpawnPoint;
         
-        public GameObject GameObject => gameObject;
-        
         public void SetCurrencyText(string text) => _currencyText.text = text;
         public void SetEnergyText(string text) => _energyText.text = text;
         

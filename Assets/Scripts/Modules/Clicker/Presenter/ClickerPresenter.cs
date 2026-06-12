@@ -54,10 +54,6 @@ namespace Modules.Clicker.Presenter
             _model.Energy
                 .Subscribe(value => _view.SetEnergyText($"Energy: {value}/{_config.MaxEnergy}"))
                 .AddTo(_disposables);
-            
-            _model.CanClick
-                .Subscribe(canClick => UpdateButtonState(canClick))
-                .AddTo(_disposables);
         }
         
         private void HandleClick()
@@ -110,15 +106,6 @@ namespace Modules.Clicker.Presenter
             Observable.Interval(TimeSpan.FromSeconds(_config.EnergyRestoreInterval))
                 .Subscribe(_ => _model.AddEnergy(_config.EnergyRestoreAmount))
                 .AddTo(_disposables);
-        }
-        
-        private void UpdateButtonState(bool canClick)
-        {
-            var button = _view.ButtonTransform?.GetComponent<UnityEngine.UI.Button>();
-            if (button != null)
-            {
-                button.interactable = canClick;
-            }
         }
         
         public void Dispose()

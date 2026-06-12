@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 7803723068017519690}
   - component: {fileID: 585394353269800726}
   - component: {fileID: 2292107909564074672}
+  - component: {fileID: 2386569870056488981}
   m_Layer: 5
   m_Name: BreedButton
   m_TagString: Untagged
@@ -255,3 +256,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2386569870056488981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3680105742680904472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e40dd1e33b374e0d892620078e889e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameText: {fileID: 680258796460086978}
+  _button: {fileID: 2292107909564074672}

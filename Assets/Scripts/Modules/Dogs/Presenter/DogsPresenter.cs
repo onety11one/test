@@ -68,11 +68,11 @@ namespace Modules.Dogs.Presenter
                 .AddTo(_disposables);
             
             _model.IsBreedsLoading
-                .Subscribe(isLoading => _view.SetBreedsLoading(isLoading))
+                .Subscribe(isLoading => _view.SetLoading(isLoading))
                 .AddTo(_disposables);
             
             _model.IsFactLoading
-                .Subscribe(isLoading => _view.SetFactLoading(isLoading))
+                .Subscribe(isLoading => _view.SetLoading(isLoading))
                 .AddTo(_disposables);
         }
         

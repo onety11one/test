@@ -13,8 +13,6 @@ namespace Modules.Weather.View
         [SerializeField] private TMP_Text _weatherText;
         [SerializeField] private Image _weatherIcon; 
         
-        public GameObject GameObject => gameObject;
-        
         private readonly Subject<Unit> _onTabSelected = new();
         private readonly Subject<Unit> _onTabDeselected = new();
         

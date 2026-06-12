@@ -8,9 +8,8 @@ public interface IDogsView
     IObservable<Unit> OnTabDeselected { get; }
     IObservable<string> OnBreedClicked { get; }
     
-    void SetBreedsList(DogBreed[] breeds);  // Изменили сигнатуру
-    void SetBreedsLoading(bool isLoading);
-    void SetFactLoading(bool isLoading);
+    void SetBreedsList(DogBreed[] breeds);
+    void SetLoading(bool isLoading);
     void ShowFactPopup(string breedName, string description);
     void HideFactPopup();
 }

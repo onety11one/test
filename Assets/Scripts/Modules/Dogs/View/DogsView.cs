@@ -4,6 +4,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Core.Navigation;
+using DG.Tweening;
 using Modules.Dogs.Model;
 using TMPro;
 
@@ -14,25 +15,23 @@ namespace Modules.Dogs.View
         [Header("UI Elements")]
         [SerializeField] private GameObject _contentPanel;
         [SerializeField] private Transform _breedsContainer;
-        [SerializeField] private Button _breedButtonPrefab;
-        [SerializeField] private GameObject _breedsLoadingIndicator;
+        [SerializeField] private BreedButton _breedButtonPrefab;
+        [SerializeField] private GameObject _loadingIndicator;
         
         [Header("Fact Popup")]
         [SerializeField] private GameObject _factPopup;
         [SerializeField] private TMP_Text _factBreedName;
         [SerializeField] private TMP_Text _factDescription;
         [SerializeField] private Button _factCloseButton;
-        [SerializeField] private GameObject _factLoadingIndicator;
         
         [Header("Content")]
         [SerializeField] private RectTransform _popupContent;
         
-        public GameObject GameObject => gameObject;
-        
         private readonly Subject<Unit> _onTabSelected = new();
         private readonly Subject<Unit> _onTabDeselected = new();
         private readonly Subject<string> _onBreedClicked = new();
-        private readonly List<Button> _breedButtons = new();
+        private readonly List<BreedButton> _breedButtons = new();
+        private readonly CompositeDisposable _breedDisposables = new();
         
         public IObservable<Unit> OnTabSelected => _onTabSelected;
         public IObservable<Unit> OnTabDeselected => _onTabDeselected;
@@ -55,40 +54,63 @@ namespace Modules.Dogs.View
             else
                 gameObject.SetActive(false);
             
+            ClearBreedsList();
             _onTabDeselected.OnNext(Unit.Default);
         }
         
         public void SetBreedsList(DogBreed[] breeds)
         {
-            foreach (var button in _breedButtons)
-            {
-                Destroy(button.gameObject);
-            }
-            _breedButtons.Clear();
+            ClearBreedsList();
             
             for (int i = 0; i < breeds.Length; i++)
             {
                 var button = Instantiate(_breedButtonPrefab, _breedsContainer);
-                var text = button.GetComponentInChildren<TMP_Text>();
-                text.text = $"{i + 1} - {breeds[i].name}";
-        
+                
                 var breedId = breeds[i].id;
-                button.onClick.AddListener(() => _onBreedClicked.OnNext(breedId));
-        
+                var breedName = breeds[i].name;
+                var index = i + 1;
+                
+                button.Setup(breedId, breedName, index);
+                
+                button.Button.onClick.AsObservable()
+                    .Subscribe(_ => _onBreedClicked.OnNext(breedId))
+                    .AddTo(_breedDisposables);
+                
                 _breedButtons.Add(button);
             }
         }
         
-        public void SetBreedsLoading(bool isLoading)
+        private void ClearBreedsList()
         {
-            if (_breedsLoadingIndicator != null)
-                _breedsLoadingIndicator.SetActive(isLoading);
+            _breedDisposables.Clear();
+            
+            foreach (var button in _breedButtons)
+            {
+                button.Clear();
+                Destroy(button.gameObject);
+            }
+            _breedButtons.Clear();
         }
         
-        public void SetFactLoading(bool isLoading)
+        public void SetLoading(bool isLoading)
         {
-            if (_factLoadingIndicator != null)
-                _factLoadingIndicator.SetActive(isLoading);
+            if (_loadingIndicator != null)
+            {
+                _loadingIndicator.SetActive(isLoading);
+                
+                if (isLoading)
+                {
+                    _loadingIndicator.transform
+                        .DORotate(new Vector3(0, 0, -360), 1f, RotateMode.FastBeyond360)
+                        .SetEase(Ease.Linear)
+                        .SetLoops(-1, LoopType.Restart);
+                }
+                else
+                {
+                    _loadingIndicator.transform.DOKill();
+                    _loadingIndicator.transform.rotation = Quaternion.identity;
+                }
+            }
         }
         
         public void ShowFactPopup(string breedName, string description)
@@ -99,8 +121,7 @@ namespace Modules.Dogs.View
                 _factDescription.text = description;
                 _factPopup.SetActive(true);
                 
-                //Canvas.ForceUpdateCanvases();
-                //LayoutRebuilder.ForceRebuildLayoutImmediate(_popupContent);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(_popupContent);
             }
         }
         
