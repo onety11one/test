@@ -3,7 +3,7 @@ using Modules.Weather.Model;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Modules.Weather
+namespace Modules.Weather.Services
 {
     public class WeatherService
     {

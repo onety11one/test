@@ -3,6 +3,7 @@ using UniRx;
 using UnityEngine;
 using Core.Network;
 using Modules.Weather.Model;
+using Modules.Weather.Services;
 using Modules.Weather.View;
 
 namespace Modules.Weather.Presenter
